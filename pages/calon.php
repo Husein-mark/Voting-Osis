@@ -8,19 +8,19 @@ include "config.php";
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <h6>Data Siswa</h6>
+              <h6>Data Calon</h6>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
-                <a class="btn btn-primary mt-3 w-15 ms-4" href="../pages/tambah_siswa.php">Tambah Data</a>
+                <a class="btn btn-primary mt-3 w-15 ms-4" href="../pages/tambah_calon.php">Tambah Calon</a>
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">No</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Kelas</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jurusan</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Alamat</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Visi</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Misi</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Foto</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
                     </tr>
                   </thead>
@@ -28,7 +28,7 @@ include "config.php";
                     <tr>
                       <?php
                       $no = 1;
-                        $query = mysqli_query($koneksi, "select * from tbl_siswa");
+                        $query = mysqli_query($koneksi, "select * from tbl_calon_ketua_osis");
                         foreach ($query as $data):
                       ?>
                       <td class="align-middle text-center">
@@ -40,24 +40,24 @@ include "config.php";
                             <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1">
                           </div>
                           <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm"><?= $data['nama']?></h6>
+                            <h6 class="mb-0 text-sm"><?= $data['nama_calon']?></h6>
                           </div>
                         </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0"><?= $data['kelas']?></p>
+                        <p class="text-xs font-weight-bold mb-0"><?= $data['visi']?></p>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <span class="text-secondary text-xs font-weight-bold"><?= $data['jurusan']?></span>
+                        <span class="text-secondary text-xs font-weight-bold"><?= $data['misi']?></span>
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold"><?= $data['alamat']?></span>
+                        <span class="text-secondary text-xs font-weight-bold"><?= $data['foto']?></span>
                       </td>
                       <td class="align-middle g-2 text-center">
-                        <a href="../pages/edit_siswa.php?id=<?= $data['id_siswa'] ?>" class= "font-weight-bold text-xs badge badge-sm bg-gradient-primary" data-toggle="tooltip" data-original-title="Edit user">
+                        <a href="../pages/edit_calon.php?id=<?= $data['id_calon'] ?>" class="font-weight-bold badge badge-sm bg-gradient-primary" data-toggle="tooltip" data-original-title="Edit user">
                           Edit
                         </a>
-                        <a href="../pages/delete_siswa.php?id=<?= $data['id_siswa'] ?>" class=" badge badge-sm bg-gradient-danger" data-toggle="tooltip" data-original-title="Edit user">
+                        <a href="../pages/delete_calon.php?id=<?= $data['id_calon'] ?>" class="badge badge-sm bg-gradient-danger" data-toggle="tooltip" data-original-title="Edit user">
                           Delete
                         </a>
                       </td>
