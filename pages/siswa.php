@@ -12,7 +12,7 @@ include "config.php";
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
-                <a class="btn btn-primary mt-3 w-15 ms-5" href="../pages/tambah_siswa.php">Tambah Siswa</a>
+                <a class="btn btn-primary mt-3 w-15 ms-4" href="../pages/tambah_siswa.php">Tambah Data</a>
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
