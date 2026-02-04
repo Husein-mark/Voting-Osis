@@ -1,6 +1,9 @@
 <?php
-include 'header.php';
-include 'config.php';
+include "../Header/header.php";
+include "../Header/config.php";
+
+$halaman = basename($_SERVER['PHP_SELF']);
+$berhasil = false;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nama = $_POST['nama'];
@@ -8,16 +11,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $jurusan = $_POST['jurusan'];
     $alamat = $_POST['alamat'];
 
-    $query = "INSERT INTO tbl_siswa (nama, kelas, jurusan, alamat)
-              VALUES ('$nama', '$kelas', '$jurusan', '$alamat')";
-
-    if (mysqli_query($koneksi, $query)) {
-        echo "<script>alert('Data Siswa Berhasil Ditambahkan');
-              window.location.href='siswa.php';</script>";
-    } else {
-        echo "Error: " . mysqli_error($koneksi);
-    }
+    $query = mysqli_query($koneksi, "INSERT INTO tbl_siswa (nama, kelas, jurusan, alamat)
+              VALUES ('$nama', '$kelas', '$jurusan', '$alamat')");
+    
+    if ($query){
+    $berhasil = true;
+    }   
 }
+
+
+
+
 ?>
 
 
@@ -53,3 +57,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </div>
 </div>
+
+<?php
+ if($berhasil) { ?>
+    <script>
+    Swal.fire({
+    icon: "success",
+    text: "Data Berhasil Ditambahkan!",
+    showConfirmButton: false,
+    timer: 2000
+    }).then(() => {
+    window.location.href = "siswa.php";
+    })
+    </script>
+ <?php } ?>

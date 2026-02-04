@@ -1,6 +1,9 @@
 <?php
-include 'header.php';
-include 'config.php';
+include "../Header/header.php";
+include "../Header/config.php";
+
+$halaman = basename($_SERVER['PHP_SELF']);
+$berhasil = false;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nama = $_POST['nama'];
@@ -8,14 +11,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $misi = $_POST['misi'];
     $foto = $_POST['foto'];
 
-    $query = "INSERT INTO tbl_calon_ketua_osis(nama_calon, visi, misi, foto) VALUES ('$nama','$visi','$misi','$foto')";
+    $query = mysqli_query($koneksi, "INSERT INTO tbl_calon_ketua_osis(nama_calon, visi, misi, foto) VALUES ('$nama','$visi','$misi','$foto')");
 
-    if (mysqli_query($koneksi, $query)) {
-        echo "<script>alert('Data Calon Berhasil Ditambahkan');
-              window.location.href='calon.php';</script>";
-    } else {
-        echo "Error: " . mysqli_error($koneksi);
-    }
+    if ($query){
+    $berhasil = true;
+    }   
 }
 ?>
 
@@ -52,3 +52,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </div>
 </div>
+
+<?php
+ if($berhasil) { ?>
+    <script>
+    Swal.fire({
+    icon: "success",
+    text: "Data Berhasil Ditambahkan!",
+    showConfirmButton: false,
+    timer: 2000
+    }).then(() => {
+    window.location.href = "calon.php";
+    })
+    </script>
+ <?php } ?>

@@ -1,6 +1,9 @@
 <?php
-include "header.php";
-include "config.php";
+include "../Header/header.php";
+include "../Header/config.php";
+
+$halaman = basename($_SERVER['PHP_SELF']);
+
 ?>
 
     <div class="container-fluid py-4">
@@ -8,18 +11,18 @@ include "config.php";
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <h6>Data Siswa</h6>
+              <h6>Data Admin</h6>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
-                <a class="btn btn-primary mt-3 w-15 ms-4" href="../pages/tambah_siswa.php">Tambah Data</a>
+                <a class="btn btn-primary mt-3 w-15 ms-4" href="../Admin/tambah_admin.php">Tambah Data</a>
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">No</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Kelas</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jurusan</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Username</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Password</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Alamat</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
                     </tr>
@@ -28,7 +31,7 @@ include "config.php";
                     <tr>
                       <?php
                       $no = 1;
-                        $query = mysqli_query($koneksi, "select * from tbl_siswa");
+                        $query = mysqli_query($koneksi, "select * from tbl_admin");
                         foreach ($query as $data):
                       ?>
                       <td class="align-middle text-center">
@@ -37,27 +40,28 @@ include "config.php";
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div>
-                            <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1">
+                            <img src="../../assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1">
                           </div>
                           <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm"><?= $data['nama']?></h6>
+                            <h6 class="mb-0 text-sm"><?= $data['username']?></h6>
                           </div>
                         </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0"><?= $data['kelas']?></p>
+                        <p class="text-xs font-weight-bold mb-0"><?= $data['password']?></p>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <span class="text-secondary text-xs font-weight-bold"><?= $data['jurusan']?></span>
+                        <span class="text-secondary text-xs font-weight-bold"><?= $data['nama']?></span>
                       </td>
                       <td class="align-middle text-center">
                         <span class="text-secondary text-xs font-weight-bold"><?= $data['alamat']?></span>
                       </td>
                       <td class="align-middle g-2 text-center">
-                        <a href="../pages/edit_siswa.php?id=<?= $data['id_siswa'] ?>" class= "font-weight-bold text-xs badge badge-sm bg-gradient-primary" data-toggle="tooltip" data-original-title="Edit user">
+                        <a href="../Admin/edit_admin.php?id=<?= $data['id_siswa'] ?>"" class="font-weight-bold text-xs badge badge-sm bg-gradient-primary" data-toggle="tooltip" data-original-title="Edit user">
                           Edit
                         </a>
-                        <a href="../pages/delete_siswa.php?id=<?= $data['id_siswa'] ?>" class=" badge badge-sm bg-gradient-danger" data-toggle="tooltip" data-original-title="Edit user">
+                        <a href="#" class="font-weight-bold text-xs badge badge-sm bg-gradient-danger"
+                        onclick="hapusAdmin(<?= $data['id_siswa']; ?>)" data-toggle="tooltip" data-original-title="Edit user">
                           Delete
                         </a>
                       </td>
@@ -188,6 +192,36 @@ include "config.php";
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/soft-ui-dashboard.min.js?v=1.1.0"></script>
+
+  <script>
+  function hapusAdmin(id){
+  Swal.fire({
+    title: "Apakah anda Yakin?",
+    text: "Data Admin akan di hapus permanen",
+    showDenyButton: true,
+    confirmButtonText: "Ya, Hapus",
+    cancelButtonText: "Batal",
+  }).then((result) => {
+    if (result.isConfirmed) {
+
+      Swal.fire({
+        title: "Data Berhasil Dihapus!",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 2000 // alert tampil 2 detik
+      });
+
+      setTimeout(function(){
+        window.location = 'delete_admin.php?id=' + id;
+      }, 2000);
+
+    } else if (result.isDenied) {
+      Swal.fire("Data Tidak Berubah", "", "info");
+    }
+  });
+}
+</script>
+
 </body>
 
 </html>

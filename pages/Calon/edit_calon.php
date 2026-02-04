@@ -1,6 +1,9 @@
 <?php
 
-include 'config.php';
+include "../Header/config.php";
+
+$halaman = basename($_SERVER['PHP_SELF']);
+$berhasil = false;
 
 $id = $_GET['id'] ?? null;
 
@@ -16,13 +19,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $misi = $_POST['misi'];
     $foto = $_POST['foto'];
  
-    mysqli_query($koneksi, "Update tbl_calon_ketua_osis set nama_calon='$nama', visi='$visi', misi='$misi', foto='$foto' where id_calon = '$id'");
+    $query = mysqli_query($koneksi, "Update tbl_calon_ketua_osis set nama_calon='$nama', visi='$visi', misi='$misi', foto='$foto' where id_calon = '$id'");
 
-    header("Location: calon.php");
-    exit;
+    if ($query){
+    $berhasil = true;
+
+    $ambil = mysqli_query($koneksi, "SELECT * FROM tbl_admin WHERE id_siswa = '$id'");
+    $siswa = mysqli_fetch_assoc($ambil);
+    }   
 }
 
-include 'header.php';
+include "../Header/header.php";
 ?>
 
 
@@ -58,3 +65,17 @@ include 'header.php';
         </div>
     </div>
 </div>
+
+<?php
+ if($berhasil) { ?>
+    <script>
+    Swal.fire({
+    icon: "success",
+    text: "Data Berhasil Diganti!",
+    showConfirmButton: false,
+    timer: 2000
+    }).then(() => {
+    window.location.href = "calon.php";
+    })
+    </script>
+ <?php } ?>

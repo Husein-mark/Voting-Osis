@@ -1,5 +1,7 @@
 <?php
-include "header.php";
+include "../Header/header.php";
+
+$halaman = basename($_SERVER['PHP_SELF']);
 ?>
 
     <div class="container-fluid py-4">

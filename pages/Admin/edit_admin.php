@@ -1,6 +1,9 @@
 <?php
 
-include 'config.php';
+include "../Header/config.php";
+
+$halaman = basename($_SERVER['PHP_SELF']);
+$berhasil = false;
 
 $id = $_GET['id'] ?? null;
 
@@ -16,13 +19,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nama = $_POST['nama'];
     $alamat = $_POST['alamat'];
  
-    mysqli_query($koneksi, "Update tbl_admin set username='$username', password='$password', nama='$nama', alamat='$alamat' where id_siswa = '$id'");
+    $query = mysqli_query($koneksi, "Update tbl_admin set username='$username', password='$password', nama='$nama', alamat='$alamat' where id_siswa = '$id'");
 
-    header("Location: admin.php");
-    exit;
+    if ($query){
+    $berhasil = true;
+
+    $ambil = mysqli_query($koneksi, "SELECT * FROM tbl_admin WHERE id_siswa = '$id'");
+    $siswa = mysqli_fetch_assoc($ambil);
+    }   
+
 }
 
-include 'header.php';
+include "../Header/header.php";
 ?>
 
 
@@ -41,7 +49,7 @@ include 'header.php';
                 </div>
                 <div class="form-group mx-3 my-3">
                     <label class="mb-2 ms-3">Password</label>
-                    <input type="text" class="form-control" id="password" name="password" value="<?= $siswa['password'] ?>">
+                    <input type="password" class="form-control" id="password" name="password" value="<?= $siswa['password'] ?>">
                 </div>
 
                 <div class="form-group mx-3 my-3">
@@ -58,3 +66,17 @@ include 'header.php';
         </div>
     </div>
 </div>
+
+<?php
+ if($berhasil) { ?>
+    <script>
+    Swal.fire({
+    icon: "success",
+    text: "Data Berhasil Diganti!",
+    showConfirmButton: false,
+    timer: 2000
+    }).then(() => {
+    window.location.href = "admin.php";
+    })
+    </script>
+ <?php } ?>

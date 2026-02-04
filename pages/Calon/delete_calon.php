@@ -1,5 +1,5 @@
 <?php
-include 'config.php';
+include "../Header/config.php";
 
 $id = $_GET['id'] ?? null;
 

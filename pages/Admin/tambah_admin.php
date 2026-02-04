@@ -1,6 +1,9 @@
 <?php
-include 'header.php';
-include 'config.php';
+include "../Header/header.php";
+include "../Header/config.php";
+
+$halaman = basename($_SERVER['PHP_SELF']);
+$berhasil = false;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
@@ -8,14 +11,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nama = $_POST['nama'];
     $alamat = $_POST['alamat'];
 
-    $query = "INSERT INTO tbl_admin(username, password, nama, alamat) VALUES ('$username','$password','$nama','$alamat')";
+    $query = mysqli_query($koneksi, "INSERT INTO tbl_admin(username, password, nama, alamat) VALUES ('$username','$password','$nama','$alamat')");
 
-    if (mysqli_query($koneksi, $query)) {
-        echo "<script>alert('Data Admin Berhasil Ditambahkan');
-              window.location.href='admin.php';</script>";
-    } else {
-        echo "Error: " . mysqli_error($koneksi);
-    }
+    if ($query){
+    $berhasil = true;
+    }   
 }
 ?>
 
@@ -52,3 +52,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </div>
 </div>
+
+<?php
+ if($berhasil) { ?>
+    <script>
+    Swal.fire({
+    icon: "success",
+    text: "Data Berhasil Ditambahkan!",
+    showConfirmButton: false,
+    timer: 2000
+    }).then(() => {
+    window.location.href = "admin.php";
+    })
+    </script>
+ <?php } ?>

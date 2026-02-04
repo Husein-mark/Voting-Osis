@@ -1,6 +1,10 @@
 <?php
-include "header.php";
-include "config.php";
+include "../Header/header.php";
+include "../Header/config.php";
+
+$halaman = basename($_SERVER['PHP_SELF']);
+
+
 ?>
 
     <div class="container-fluid py-4">
@@ -12,7 +16,7 @@ include "config.php";
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
-                <a class="btn btn-primary mt-3 w-15 ms-4" href="../pages/tambah_calon.php">Tambah Calon</a>
+                <a class="btn btn-primary mt-3 w-15 ms-4" href="../Calon/tambah_calon.php">Tambah Calon</a>
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
@@ -37,7 +41,7 @@ include "config.php";
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div>
-                            <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1">
+                            <img src="../../assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1">
                           </div>
                           <div class="d-flex flex-column justify-content-center">
                             <h6 class="mb-0 text-sm"><?= $data['nama_calon']?></h6>
@@ -54,10 +58,10 @@ include "config.php";
                         <span class="text-secondary text-xs font-weight-bold"><?= $data['foto']?></span>
                       </td>
                       <td class="align-middle g-2 text-center">
-                        <a href="../pages/edit_calon.php?id=<?= $data['id_calon'] ?>" class="font-weight-bold badge badge-sm bg-gradient-primary" data-toggle="tooltip" data-original-title="Edit user">
+                        <a href="../Calon/edit_calon.php?id=<?= $data['id_calon'] ?>" class="font-weight-bold badge badge-sm bg-gradient-primary" data-toggle="tooltip" data-original-title="Edit user">
                           Edit
                         </a>
-                        <a href="../pages/delete_calon.php?id=<?= $data['id_calon'] ?>" class="badge badge-sm bg-gradient-danger" data-toggle="tooltip" data-original-title="Edit user">
+                        <a href="#" class="font-weight-bold text-xs badge badge-sm bg-gradient-danger" onclick="hapusCalon(<?= $data['id_calon']; ?>)" data-toggle="tooltip" data-original-title="Edit user">
                           Delete
                         </a>
                       </td>
@@ -188,6 +192,37 @@ include "config.php";
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/soft-ui-dashboard.min.js?v=1.1.0"></script>
+
+  <script>
+function hapusCalon(id){
+  Swal.fire({
+    title: "Apakah anda Yakin?",
+    text: "Data Calon akan di hapus permanen",
+    showDenyButton: true,
+    confirmButtonText: "Ya, Hapus",
+    cancelButtonText: "Batal",
+  }).then((result) => {
+    if (result.isConfirmed) {
+
+      Swal.fire({
+        title: "Data Berhasil Dihapus!",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 2000
+      });
+
+      setTimeout(function(){
+        window.location = 'delete_calon.php?id=' + id;
+      }, 2000);
+
+    } else if (result.isDenied) {
+      Swal.fire("Data Tidak Berubah", "", "info");
+    }
+  });
+}
+</script>
+
+
 </body>
 
 </html>
