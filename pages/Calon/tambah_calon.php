@@ -9,9 +9,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nama = $_POST['nama'];
     $visi = $_POST['visi'];
     $misi = $_POST['misi'];
-    $foto = $_POST['foto'];
 
-    $query = mysqli_query($koneksi, "INSERT INTO tbl_calon_ketua_osis(nama_calon, visi, misi, foto) VALUES ('$nama','$visi','$misi','$foto')");
+    // Folder Upload
+    $folder = "../../assets/img/";
+
+    //Ambil Data File
+    $namaFile = $_FILES ['foto']['name'];
+    $tmpFile = $_FILES ['foto']['tmp_name'];
+
+    $namaBaru = time() . "_" . $namaFile;
+
+    move_uploaded_file($tmpFile, $folder . $namaBaru);
+
+
+    $query = mysqli_query($koneksi, "INSERT INTO tbl_calon_ketua_osis(nama_calon, visi, misi, foto) VALUES ('$nama','$visi','$misi','$namaBaru')");
 
     if ($query){
     $berhasil = true;
@@ -28,23 +39,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <h6>Tambah Calon</h6>
         </div>
         <div class="card-body px-0 pt-0 pb-2">
-            <form method="POST">
+            <form method="POST" enctype="multipart/form-data">
                 <div class="form-group mx-3 my-3">
                     <label class="mb-2 ms-3">Nama</label>
-                    <input type="text" class="form-control" id="nama" name="nama">
+                    <input type="text" class="form-control" id="nama" name="nama" required>
                 </div>
                 <div class="form-group mx-3 my-3">
                     <label class="mb-2 ms-3">Visi</label>
-                    <input type="text" class="form-control" id="visi" name="visi">
+                    <input type="text" class="form-control" id="visi" name="visi" required>
                 </div>
 
                 <div class="form-group mx-3 my-3">
                     <label class="mb-2 ms-3">Misi</label>
-                    <input type="text" class="form-control" id="misi" name="misi">
+                    <input type="text" class="form-control" id="misi" name="misi" required>
                 </div>
                 <div class="form-group mx-3 my-3">
                     <label class="mb-2 ms-3">Foto</label>
-                    <input type="text" class="form-control" id="foto" name="foto">
+                    <input type="file" class="form-control" id="foto" name="foto" required>
                 </div>
                 <button type="submit" class="btn btn-primary mx-3 my-3 ">Simpan</button>
             </form>

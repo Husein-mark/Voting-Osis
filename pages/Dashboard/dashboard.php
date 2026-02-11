@@ -1,5 +1,9 @@
 <?php
+
+use Dom\Mysql;
+
 include "../Header/header.php";
+include "../Header/config.php";
 
 $halaman = basename($_SERVER['PHP_SELF']);
 ?>
@@ -51,7 +55,11 @@ $halaman = basename($_SERVER['PHP_SELF']);
                       <h5 class="text-white font-weight-bolder mb-0 mt-3">
                         357
                       </h5>
-                      <span class="text-white text-sm">Click Events</span>
+                      <span class="text-white text-sm">
+                      <?php 
+                        $query = mysqli_query($koneksi, "select count(id_calon) as jumlah_calon from tbl_calon_ketua_osis");
+                      ?>
+                      </span>
                     </div>
                     <div class="col-4">
                       <div class="dropstart text-end mb-6">
